@@ -1,19 +1,53 @@
 #include <iostream>
 #include <sstream>
 #include <cstdint>
-
+#include <fstream>
+#include <map>
 #include "./state.hpp"
 #include "../config.hpp"
 
-
+//std::ofstream test("test.txt", std::ios::app);
+/*
+std::map<int ,int >maps={
+  {1,2},
+  {2,6},
+  {3,7},
+  {4,8},
+  {5,20},
+  {6,1e9},
+};
+*/
 /**
  * @brief evaluate the state
  * 
  * @return int 
  */
-int State::evaluate(){
+int State::evaluate(bool first){
   // [TODO] design your own evaluation function
-  return 0;
+  int myscore=0;
+  int opscore=0;
+  for(int i=0;i<BOARD_H;i++){
+    for(int j=0;j<BOARD_W;j++){
+      if(this->board.board[!first][i][j]==1) myscore+=2;
+      if(this->board.board[!first][i][j]==2) myscore+=6;
+      if(this->board.board[!first][i][j]==3) myscore+=7;
+      if(this->board.board[!first][i][j]==4) myscore+=8;
+      if(this->board.board[!first][i][j]==5) myscore+=20;
+      if(this->board.board[!first][i][j]==6) myscore+=1e9;
+      if(this->board.board[first][i][j]==1) opscore+=2;
+      if(this->board.board[first][i][j]==2) opscore+=6;
+      if(this->board.board[first][i][j]==3) opscore+=7;
+      if(this->board.board[first][i][j]==4) opscore+=8;
+      if(this->board.board[first][i][j]==5) opscore+=20;
+      if(this->board.board[first][i][j]==6) opscore+=1e9;
+      /*    
+      myscore+=maps[this->board.board[this->player][i][j]];
+      opscore+=maps[this->board.board[!this->player][i][j]];
+      */
+    }
+  }
+  //test<<first<<std::endl;
+  return myscore-opscore;
 }
 
 
